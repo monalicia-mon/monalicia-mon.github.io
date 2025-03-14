@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Design Optimizer Redesign | Monica Morales</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #0A2342;
+            background-color: #fff;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        header {
+            padding: 2rem 0;
+        }
+        
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .section-title {
+            color: #FF6B6B;
+            margin-bottom: 2rem;
+        }
+        
+        .two-col {
+            display: flex;
+            gap: 4rem;
+            margin: 2rem 0;
+        }
+        
+        .col {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .two-col {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        /* Components */
+        .hero {
+            background-color: #f8f8f8;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #0A2342;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-meta {
+            display: flex;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .meta-item h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #0A2342;
+        }
+        
+        .meta-item p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        
+        .image-container {
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .before-after-item {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .before-after-item h4 {
+            margin-top: 0.75rem;
+            text-align: center;
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .highlight-box {
+            background-color: #f8f8f8;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .highlight-box h3 {
+            color: #FF6B6B;
+            margin-top: 0;
+        }
+        
+        .process-step {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #FF6B6B;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .results-box {
+            background-color: #E0F7FA;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .results-stat {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FF6B6B;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-label {
+            font-size: 1.125rem;
+            color: #0A2342;
+        }
+        
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #0A2342;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #0A2342;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #FF6B6B;
+        }
+        
+        /* Color system */
+        .color-system {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .color-item {
+            width: 100px;
+            text-align: center;
+        }
+        
+        .color-swatch {
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .color-hex {
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        
+        /* Component previews */
+        .component-preview {
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        /* Case study specific styles */
+        .orange-text {
+            color: #FF6B6B;
+        }
+        
+        .navy-text {
+            color: #0A2342;
+        }
+    </style>
+</head>
+<body>
+    <nav class="container">
+        <a href="#" class="logo">Monica Morales</a>
+        <div class="nav-links">
+            <a href="#">Work</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1><span class="orange-text">Enhancing Usability</span> <span class="navy-text">and User Experience:</span></h1>
+                <h2 class="orange-text">The Solar Design Optimizer (SDO) Redesign</h2>
+                <p class="subtitle">A comprehensive UI/UX redesign of a critical desktop application for solar design engineers</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="image-container">
+            <img src="/api/placeholder/1200/600" alt="Solar Design Optimizer interface showing the redesigned application">
+        </div>
+
+        <div class="project-meta">
+            <div class="meta-item">
+                <h4>Role</h4>
+                <p>Research, UX & UI Designer</p>
+            </div>
+            <div class="meta-item">
+                <h4>Timeframe</h4>
+                <p>February 2024</p>
+            </div>
+            <div class="meta-item">
+                <h4>Tools</h4>
+                <p>Figma, Balsamiq</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="background">
+        <div class="container">
+            <h2 class="section-title">Background</h2>
+            
+            <div class="two-col">
+                <div class="col">
+                    <p>Sungevity, a leading residential solar company, relied heavily on the Solar Design Optimizer (SDO) — a desktop application pivotal for its Solar Design and Engineering team. The team used it to design solar systems and generate detailed plan sets for permit approval.</p>
+                    
+                    <p>The SDO was a feature robust app, but users reported significant usability issues: the interface was cluttered, visually tiring, and tough to navigate. Despite plans for a redesign to tackle these issues, Sungevity shut down operations in 2020 before changes could be made.</p>
+                    
+                    <h3>Personal Initiative</h3>
+                    <p>Despite Sungevity ceasing operations, I decided to independently redesign the SDO interface to showcase my design problem solving skills and illustrate how user-centric solutions could have revolutionized the experience. User feedback gathered prior to the closure was used to inform the redesign.</p>
+                </div>
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Original SDO interface showing cluttered design">
+                        <p style="text-align: center; margin-top: 0.5rem; font-style: italic;">"Line Diagram" screen, original state</p>
+                    </div>
+                    
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Redesigned SDO interface showing improved layout">
+                        <p style="text-align: center; margin-top: 0.5rem; font-style: italic;">"Line Diagram" screen, final redesign</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>The Challenge</h3>
+                <p>The SDO suffered from a lack of visual hierarchy and differentiation, featuring a monochromatic color palette and uniform typography that increased cognitive load and reduced user engagement in a task-intensive environment.</p>
+                
+                <p>Additionally, the mismatch with Sungevity's vibrant brand identity was a missed opportunity to enhance user experience and reflect the company's motto: "Generate Positive".</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="business-opportunity">
+        <div class="container">
+            <h2 class="section-title">Business Opportunity</h2>
+            
+            <p>The SDO is pivotal in streamlining the solar system design and permit approval process for residential solar installations, enhancing both profitability and operational efficiency. Here's how the redesign enhances key aspects:</p>
+            
+            <ul>
+                <li><strong>Boost Permit Approval Percentages:</strong> Enhancing interface clarity helps minimize errors that impact permit approvals, expediting project timelines and reducing costly permit rejections.</li>
+                <li><strong>Boosts Monthly Plan Set Completion Rates:</strong> Enhanced UI features allow designers to complete plan sets more efficiently, which directly boosts productivity and impacts revenue.</li>
+            </ul>
+            
+            <p>These improvements in usability and efficiency ensure the SDO redesign elevates key performance metrics and significantly enhances revenue generation.</p>
+            
+            <div class="image-container">
+                <img src="/api/placeholder/1000/350" alt="Business impact flowchart showing how UX improvements lead to business metrics">
+            </div>
+        </div>
+    </section>
+
+    <section id="research">
+        <div class="container">
+            <h2 class="section-title">Research & Understanding</h2>
+            
+            <div class="two-col">
+                <div class="col">
+                    <h3>User Feedback</h3>
+                    <p>At Sungevity, I regularly engaged with users to gather insights and identify pain points through various communication channels such as chat, email, and in-person discussions. The collected feedback was documented and systematically analyzed.</p>
+                    
+                    <p>Previous feedback from saved documentation was gathered to use as qualitative data for review of user experiences and pain points.</p>
+                    
+                    <p>User feedback was organized using affinity mapping to identify common themes and prioritize key areas for improvement.</p>
+                </div>
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Affinity mapping of user feedback">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-col">
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Visual usability audit checklist">
+                    </div>
+                </div>
+                <div class="col">
+                    <h3>Visual Usability Audit</h3>
+                    <p>I conducted a comprehensive Visual Usability Audit, using a design walkthrough checklist to evaluate aspects such as color palette, typography, iconography, spacing and layout, visual hierarchy, accessibility, and interaction cues. Questions included:</p>
+                    
+                    <ul>
+                        <li>"Do the colors enhance readability?"</li>
+                        <li>"Are the text sizes and styles used effectively and consistently?"</li>
+                        <li>"Is the most important information or action visually prominent? Does it guide the user naturally through the tasks?"</li>
+                        <li>"Does the interface meet WCAG accessibility standards?"</li>
+                        <li>"Does the interface provide visual feedback in response to user actions?"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Analysis</h3>
+            <p>User feedback and insights from the Visual Usability Audit identified several critical areas for improvement in the SDO, affecting usability and user satisfaction:</p>
+            
+            <div class="two-col">
+                <div class="col">
+                    <ul>
+                        <li><strong>Layout and Navigation:</strong> The cluttered and disorganized layout, coupled with confusing navigation, made it challenging for users to efficiently find and interact with necessary tools.</li>
+                        <li><strong>Readability Issues:</strong> Users consistently reported difficulties with readability and eye strain, highlighting deficiencies in the color palette and typography.</li>
+                        <li><strong>Inconsistent User Experience:</strong> A lack of a cohesive design system has led to a fragmented and inconsistent interface across the app.</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/300" alt="Analysis diagram showing problem areas">
+                    </div>
+                </div>
+            </div>
+            
+            <p>Addressing these key issues by refining the color palette, typography, layout, navigation, and implementing a comprehensive design system emerged as clear target areas needed to enhance usability and user satisfaction.</p>
+        </div>
+    </section>
+
+    <section id="design-system">
+        <div class="container">
+            <h2 class="section-title">Design & Development</h2>
+            
+            <h3>North Star Goal</h3>
+            <div class="highlight-box">
+                <p>Create an intuitively navigable, visually engaging software interface that minimizes cognitive load and maximizes efficiency, thereby transforming the complex process of solar system design into a streamlined, positive user experience that reflects the company mission to 'Generate Positive' in every interaction.</p>
+            </div>
+            
+            <h3>Style Guide</h3>
+            <p>After pinpointing color and typography as key factors in boosting readability and usability, I dove into refining these elements.</p>
+            
+            <p>I tapped into Sungevity's existing style guide. This strategy had dual benefits:</p>
+            <ul>
+                <li><strong>Brand Alignment:</strong> Ensuring the SDO user experience matches the company's upbeat vibe.</li>
+                <li><strong>Enhanced readability:</strong> Sungevity's color palette is ideal for enhanced readability, as well as meeting WCAG color contrast accessibility standards.</li>
+            </ul>
+            
+            <div class="two-col">
+                <div class="col">
+                    <h4>Color Palette</h4>
+                    <div class="color-system">
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #FF6B6B;"></div>
+                            <p>Primary</p>
+                            <p class="color-hex">#FF6B6B</p>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #4A4E69;"></div>
+                            <p>Secondary</p>
+                            <p class="color-hex">#4A4E69</p>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-swatch" style="background-color: #FFFFFF;"></div>
+                            <p>Background</p>
+                            <p class="color-hex">#FFFFFF</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h4>Typography</h4>
+                    <div class="typography-preview">
+                        <h1 style="font-family: 'Figtree', sans-serif;">Headline 1</h1>
+                        <h2 style="font-family: 'Figtree', sans-serif;">Headline 2</h2>
+                        <h3 style="font-family: 'Figtree', sans-serif;">Headline 3</h3>
+                        <p style="font-family: 'Open Sans', sans-serif;">Body text using Open Sans for maximum readability in data-heavy interfaces.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="component-design">
+        <div class="container">
+            <h3>Component Iterations</h3>
+            
+            <div class="two-col">
+                <div class="col">
+                    <h4>Input Fields</h4>
+                    <p>The focus shifted to the input fields, a crucial component given the SDO's heavy reliance on user data entry. I designed and continuously refined these fields right on the Structural screen, always testing and tweaking based on how they performed on the full screen layout.</p>
+                    
+                    <p><strong>Design Goal:</strong> Enhance readability</p>
+                    
+                    <p><strong>Intended Outcomes:</strong></p>
+                    <ul>
+                        <li>Lower Cognitive Load: Boost user efficiency and satisfaction.</li>
+                        <li>Reduce User Errors: Minimize risk of users entering data into the wrong fields.</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Input field iterations">
+                        <p style="text-align: center; margin-top: 0.5rem; font-style: italic;">Early/mid stage input field iterations</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-col">
+                <div class="col">
+                    <div class="image-container">
+                        <img src="/api/placeholder/500/350" alt="Button iterations">
+                        <p style="text-align: center; margin-top: 0.5rem; font-style: italic;">Early/mid stage button iterations</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <h4>Buttons</h4>
+                    <p>Previously, all buttons in the SDO were uniform in size, shape, color, and label text, which led to user errors such as accidentally clicking "Delete" instead of "Edit".</p>
+                    
+                    <p>Additionally, users often overlooked valuable workflow aid features due to indistinguishable button types.</p>
+                    
+                    <p><strong>Design Goal:</strong> Visual Distinction</p>
+                    
+                    <p>Introducing five visually distinct categories of buttons—Action, Feature Launch, Task Modal, Global Action, and Icon Buttons—each uniquely designed to clarify its function, eliminated confusion and errors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="screen-designs">
+        <div class="container">
+            <h3>Final Screen Designs</h3>
+            
+            <h4>Structural Screen</h4>
+            <div class="image-container">
+                <img src="/api/placeholder/1000/500" alt="Final structural screen design">
+            </div>
+            
+            <div class="two-col">
+                <div class="col">
+                    <ol>
+                        <li><strong>Sidebar Navigation:</strong> Transformed an unused column into a functional sidebar navigation with dynamic sub-menus for quick access to main sections, optimizing space.</li>
+                        <li><strong>Color Scheme, Typography, and Button Style Update:</strong> Adopted Sungevity's brand color palette, introduced systematic typography, and button design to improve visual clarity and hierarchy.</li>
+                        <li><strong>Enhanced Tab Management:</strong> Added delete and add buttons to tabs with clear interactive states, improving user control and minimizing accidental deletions.</li>
+                    </ol>
+                </div>
+                <div class="col">
+                    <ol start="4">
+                        <li><strong>Unified Container Layout:</strong> Simplified the screen structure by consolidating multiple nested containers into a single, two-section container for Roof Plane and Array.</li>
+                        <li><strong>Optimized Input Field Layout:</strong> Redesigned the input fields to include more space between elements and aligned columns, reducing visual clutter.</li>
+                        <li><strong>Relocation of Key Features:</strong> Shifted the 'Solar Access Measurements' table to the main screen and the 'Build Mount Detail' button to the Racking Calculator modal for better workflow alignment.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h4>Electrical Screen</h4>
+            <div class="image-container">
+                <img src="/api/placeholder/1000/500" alt="Final electrical screen design">
+            </div>
+            
+            <div class="two-col">
+                <div class="col">
+                    <ol>
+                        <li><strong>Vertical Layout Reorganization:</strong> Transitioned from a horizontal to a vertical layout, aligning user workflow from top to bottom for more intuitive navigation.</li>
+                        <li><strong>Consolidation of Configuration Controls:</strong> Positioned the "Pre-Configure" button alongside related dropdowns and checkboxes for logical grouping of controls.</li>
+                        <li><strong>Integrated Calculation Tools:</strong> Placed calculators directly beneath configuration options for immediate access during setup.</li>
+                    </ol>
+                </div>
+                <div class="col">
+                    <ol start="4">
+                        <li><strong>In-line Editing in Equipment Table:</strong> Added direct edit/delete controls within each equipment row to streamline the editing process.</li>
+                        <li><strong>Drag Handles for Easy Reordering:</strong> Implemented drag handles for simple rearrangement of equipment items, enhancing workflow flexibility.</li>
+                        <li><strong>Redesigned Action Buttons:</strong> Updated "Add Equipment" and "Draw ELD" buttons with distinct styles to clearly differentiate functions.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h4>System Screen</h4>
+            <div class="image-container">
+                <img src="/api/placeholder/1000/500" alt="Final system screen design">
+            </div>
+            
+            <h4>Project Screen</h4>
+            <div class="image-container">
+                <img src="/api/placeholder/1000/500" alt="Final project screen design">
+            </div>
+        </div>
+    </section>
+
+    <section id="results">
+        <div class="container">
+            <h2 class="section-title">Results & Conclusions</h2>
+            
+            <p>The redesign of the SDO is projected to significantly enhance productivity, with projections based on historical data indicating:</p>
+            
+            <div class="two-col">
+                <div class="col">
+                    <div class="results-box">
+                        <p class="results-stat">15%</p>
+                        <p class="results-label">increase in the number of plan sets completed per month</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="results-box">
+                        <p class="results-stat">5%</p>
+                        <p class="results-label">increase in the first submission approval rate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>These improvements are expected to greatly enhance user satisfaction by providing a visually appealing and easier-to-navigate interface, complemented by streamlined controls that simplify everyday tasks.</p>
+            
+            <div class="image-container">
+                <img src="/api/placeholder/1000/500" alt="Performance metrics visualization">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2 class="orange-text">Thank You</h2>
+            <p>© 2024 Monica Morales | UX/UI Designer</p>
+        </div>
+    </footer>
+</body>
+</html>
